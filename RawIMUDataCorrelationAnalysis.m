@@ -1,3 +1,5 @@
+% Author: Tsai Syun
+% Update: 2020.10.28
 data = [];
 %% Load Data
 data{1} = load('IMUdata1.txt');
