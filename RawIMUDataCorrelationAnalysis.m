@@ -51,10 +51,10 @@ close(fig0);
 %% Print imformation
 [M, I] = max(abs(cVal(1:6,7:12)));
 RadpDeg = pi/180;
-fprintf('STD Ratio:\n')
+fprintf('STD Ratio & Correlation:\n')
 for i = 1:col
     ratio = std(data{1}(:,i+1))/std(data{2}(:,I(i)+1));
-    fprintf(['\tData1-' num2str(i) ' / ' 'Data2-' num2str(I(i)) ': %f\n'], ratio)
+    fprintf(['\tData1-' num2str(i) ' / ' 'Data2-' num2str(I(i)) ': %.4f\t%.4f\n'], ratio, cVal(i, col+I(i)))
 end
 fprintf(['\nReference constant:\n'...
     '\trad/deg %f\n'...
