@@ -6,8 +6,8 @@ data{1} = load('IMUdata1.txt');
 data{2} = load('IMUdata2.txt');
 
 %% Find Data Frequency
-fs1 = round(length(data{1})/(data{1}(end,1) - data{1}(1,1)));
-fs2 = round(length(data{2})/(data{2}(end,1) - data{2}(1,1)));
+fs{1} = round(length(data{1})/(data{1}(end,1) - data{1}(1,1)));
+fs{2} = round(length(data{2})/(data{2}(end,1) - data{2}(1,1)));
 
 %% Interpolation According to Low fs Data
 if fs1 < fs2
@@ -18,9 +18,14 @@ else
     hFsId = 1;    
 end
 [row, col] = size(data{lFsId}(:, 2:end));
+% Check Time Coverage
+t_start = data{hFsId}(1,1);
+t_end = data{hFsId}(end,1);
+data{lFsId} = find(data{lFsId}(:,1) > t_start && data{lFsId}(:,1) < t_end);
+
 % Smooth data
-data{lFsId}(:, 2:end) = smoothdata(data{lFsId}(:, 2:end), 1);
-data{hFsId}(:, 2:end) = smoothdata(data{hFsId}(:, 2:end), 1);
+data{lFsId}(:, 2:end) = smoothdata(data{lFsId}(:, 2:end), 1, 'movmean', fs{lFsId}*0.2);
+data{hFsId}(:, 2:end) = smoothdata(data{hFsId}(:, 2:end), 1, 'movmean', fs{hFsId}*0.2);
 
 dataMerged = [data{lFsId}(:, 2:end), ...
     interp1(data{hFsId}(:,1), data{hFsId}(:, 2:end), data{lFsId}(:, 1),...
@@ -58,5 +63,7 @@ for i = 1:col
 end
 fprintf(['\nReference constant:\n'...
     '\trad/deg %f\n'...
-    '\tdeg/rad %f\n'],...
-    RadpDeg, 1/RadpDeg)
+    '\tdeg/rad %f\n'...
+    '\t1/Fs2 %f\n'...
+    '\t1/Fs1 %f\n'],...
+    RadpDeg, 1/RadpDeg, 1/fs{2}, 1/fs{1})
