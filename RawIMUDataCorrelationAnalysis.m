@@ -10,7 +10,7 @@ fs{1} = round(length(data{1})/(data{1}(end,1) - data{1}(1,1)));
 fs{2} = round(length(data{2})/(data{2}(end,1) - data{2}(1,1)));
 
 %% Interpolation According to Low fs Data
-if fs1 < fs2
+if fs{1} < fs{2}
     lFsId = 1;
     hFsId = 2;
 else
@@ -21,7 +21,7 @@ end
 % Check Time Coverage
 t_start = data{hFsId}(1,1);
 t_end = data{hFsId}(end,1);
-data{lFsId} = find(data{lFsId}(:,1) > t_start && data{lFsId}(:,1) < t_end);
+data{lFsId} = data{lFsId}(find((data{lFsId}(:,1) > t_start) & (data{lFsId}(:,1) < t_end)),:);
 
 % Smooth data
 data{lFsId}(:, 2:end) = smoothdata(data{lFsId}(:, 2:end), 1, 'movmean', fs{lFsId}*0.2);
