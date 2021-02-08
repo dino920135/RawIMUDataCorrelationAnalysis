@@ -1,12 +1,13 @@
 % Author: Tsai Syun
 % Update: 2020.10.28
 data = [];
+path = [];
 %% Load Data
-path = 'C:\DATA\NLSC_20201005-7\20201006A\';
-% data{1} = load([path '20201006B_IMU.txt']);
-% data{2} = load([path '20201006B_IMU_imu.txt']);
-data{1} = load([path '20201006A_R1_SNR_30_GivenLLH_NEU.txt']);
-data{2} = load([path '20201006_A_RQH_NLSCgps_TC_toNLSCimu.txt']);
+% path = 'C:\DATA\NLSC_20201005-7\20201006B\';
+data{1} = load([path 'IMUdata1.txt']);
+data{2} = load([path 'IMUdata2.txt']);
+% % data{1} = load([path '20201006A_R1_SNR_30_GivenLLH_NEU.txt']);
+% % data{2} = load([path '20201006_A_RQH_NLSCgps_TC_toNLSCimu.txt']);
 data{1} = data{1}(:, 1:7);
 data{2} = data{2}(:, 1:7);
 
