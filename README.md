@@ -7,3 +7,5 @@ This project is originally created for determine the axis of test IMU data. By c
 > | --------- |:------:|:------:|:------:|:-------:|:-------:|:-------:|
 
 ## Output
+>![Correlation figure](img/IMUcorrelation.jpg)
+>![Correlation Statistic](img/IMUcorrelation_output.jpg)
